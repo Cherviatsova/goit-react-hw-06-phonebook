@@ -1,18 +1,23 @@
-import { TitleFilter, InputFilter } from "./Filter.styled.jsx";
-import propTypes from "prop-types";
+import { TitleFilter, InputFilter } from './Filter.styled.jsx';
 
-const Filter = ({ value, onChange }) => {
+import { useSelector, useDispatch } from 'react-redux';
+import { getFilter } from 'redux/selector.js';
+import { changeFilter } from 'redux/actions.js';
+
+const Filter = () => {
+  const dispatch = useDispatch();
+  const value = useSelector(getFilter);
+
   return (
     <div>
       <TitleFilter>Find contacts by name</TitleFilter>
-      <InputFilter type="text" value={value} onChange={onChange} />
+      <InputFilter
+        type="text"
+        value={value}
+        onChange={evt => dispatch(changeFilter(evt.target.value))}
+      />
     </div>
   );
 };
 
 export default Filter;
-
-Filter.propTypes = {
-  value: propTypes.string.isRequired,
-  onChange: propTypes.func.isRequired,
-};

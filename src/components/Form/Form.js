@@ -6,9 +6,13 @@ import {
   ContactForm,
   Container,
 } from './Form.styled.jsx';
-import PropTypes from 'prop-types';
 
-export default function Form({ onAddContact }) {
+import { useDispatch } from 'react-redux';
+import { addContact } from 'redux/actions.js';
+
+export default function Form() {
+  const dispatch = useDispatch();
+
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -30,7 +34,9 @@ export default function Form({ onAddContact }) {
 
   const handleSubmit = evt => {
     evt.preventDefault();
-    onAddContact(name, number);
+    dispatch(addContact({ name, number }));
+    setName('');
+    setNumber('');
     reset();
   };
 
@@ -67,8 +73,3 @@ export default function Form({ onAddContact }) {
     </Container>
   );
 }
-
-Form.propTypes = {
-  onAddContact: PropTypes.func.isRequired,
-};
-// Form.propTypes = { onAddContact: PropTypes.func.isRequired };
